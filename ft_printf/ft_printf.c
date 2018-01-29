@@ -4,9 +4,18 @@
 
 #include "ft_printf.h"
 
+static int	ft_skip_key(t_key *key, const char *format)
+{
+	int i;
 
+	i = 0;
+	while (format[i] != key->sym)
+		i++;
+	i++;
+	return (i);
+}
 
-int		ft_printf(const char *format, ...)
+int			ft_printf(const char *format, ...)
 {
 	int		size;
 	va_list	args;
@@ -19,12 +28,10 @@ int		ft_printf(const char *format, ...)
 		if (*format == '%')
 		{
 			key = ft_new_key();
-			if (!ft_check_key(key, ++format))
+			if (!ft_check_key(key, ++format, args))
 				return (size);
 			size += ft_print_res(key, args);
-			while (*format != key->sym)
-				format++;
-			format++;
+			format += ft_skip_key(key, format);
 		}
 		else
 		{

@@ -46,18 +46,50 @@ static int		ft_check_modtype(t_key *key, const char *format)
 	return (res);
 }
 
-static int		ft_prescision_and_width(t_key *key, const char *format, int pr)
+static int		ft_width_key(t_key *key, const char *format, va_list args)
 {
 	int i;
 
 	i = 0;
-	if (pr)
+	if (*format == '*')
 	{
+		key->width = va_arg(args, int);
+		if (key->width < 0)
+		{
+			key->flag->minus = 1;
+			key->width *= -1;
+		}
 		i++;
-		key->precision = ft_atoi(format + 1);
 	}
 	else
+	{
 		key->width = ft_atoi(format);
+		while (ft_isdigit(format[i]))
+			i++;
+	}
+	return (i);
+}
+
+static int		ft_precision_key(t_key *key, const char *format, va_list args)
+{
+	int i;
+
+	i = 0;
+	format++;
+	i++;
+	if (*format == '*')
+	{
+		key->precision = va_arg(args, int);
+		if (key->precision < 0)
+		{
+			key->flag->minus = 1;
+			key->precision *= -1;
+		}
+		i++;
+		return (i);
+	}
+	else
+		key->precision = ft_atoi(format + 1);
 	while (ft_isdigit(format[i]))
 		i++;
 	return (i);
@@ -65,7 +97,7 @@ static int		ft_prescision_and_width(t_key *key, const char *format, int pr)
 
 
 
-int ft_check_key(t_key *key, const char *format)
+int ft_check_key(t_key *key, const char *format, va_list args)
 {
 	while (*format && !key->sym)
 	{
@@ -74,9 +106,9 @@ int ft_check_key(t_key *key, const char *format)
 		else if (ft_searcINline("hljz", *format))
 			format += ft_check_modtype(key, format);
 		else if (*format == '.')
-			format += ft_prescision_and_width(key, format, 1);
-		else if (ft_isdigit(*format))
-			format += ft_prescision_and_width(key, format, 0);
+			format += ft_precision_key(key, format, args);
+		else if (ft_isdigit(*format) || *format == '*')
+			format += ft_width_key(key, format, args);
 		else
 			key->sym = *format;
 	}

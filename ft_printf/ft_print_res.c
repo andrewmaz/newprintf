@@ -29,6 +29,11 @@ static void ft_del_key(t_key *key)
 	free(key);
 }
 
+int ft_print_float(t_key *key)
+{
+
+}
+
 int ft_print_res(t_key *key, va_list args)
 {
 	int size;
@@ -50,6 +55,8 @@ int ft_print_res(t_key *key, va_list args)
 		size = (0);
 	else if (key->sym == 'C')
 		size = (0);
+	else if (key->sym == 'f')
+		size = ft_print_float(key);
 	else
 		size = (ft_print_char(key));
 	ft_del_key(key);

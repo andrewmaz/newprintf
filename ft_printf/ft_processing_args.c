@@ -40,6 +40,34 @@ static void	ft_unsigned(t_key *key, va_list args, int base)
 		key->res = ft_size2a_base(va_arg(args, unsigned int), base);
 }
 
+char *ft_float2str(t_key *key, va_list args)
+{
+	char *aft_point;
+	char *bef_point;
+	long double tmp;
+	int i;
+	char *res;
+
+	i = 1;
+	tmp = va_arg(args, double);
+	bef_point = ft_ssize2a_base((ssize_t)tmp, 10);
+	aft_point = ft_strdup(".");
+	tmp = tmp - (int)tmp;
+	if (!key->precision)
+		key->precision = 5;
+	while (i < key->precision + 1)
+	{
+		tmp = tmp * 10;
+		aft_point = ft_realloc(aft_point, i + 1);
+		aft_point[i++] = (int)tmp + '0';
+		tmp = tmp - (int)tmp;
+	}
+	res = ft_strjoin(bef_point, aft_point);
+	ft_strdel(&bef_point);
+	ft_strdel(&aft_point);
+	return (res);
+}
+
 void ft_process_args(t_key *key, va_list args)
 {
 	if (key->sym == 'd' || key->sym == 'i' || key->sym == 'D')
@@ -60,6 +88,8 @@ void ft_process_args(t_key *key, va_list args)
 		key->wr = va_arg(args, wchar_t);
 	else if (key->sym == 'S')
 		key->wres = va_arg(args, wchar_t*);
+	else if (key->sym == 'f')
+		key->res = ft_float2str(key, args);
 	else
 		key->r = key->sym;
 }

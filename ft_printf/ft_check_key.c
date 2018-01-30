@@ -75,21 +75,17 @@ static int		ft_precision_key(t_key *key, const char *format, va_list args)
 	int i;
 
 	i = 0;
-	format++;
 	i++;
-	if (*format == '*')
+	if (format[i] == '*')
 	{
 		key->precision = va_arg(args, int);
 		if (key->precision < 0)
-		{
-			key->flag->minus = 1;
-			key->precision *= -1;
-		}
+			key->precision = -1;
 		i++;
 		return (i);
 	}
 	else
-		key->precision = ft_atoi(format);
+		key->precision = ft_atoi(format + i);
 	while (ft_isdigit(format[i]))
 		i++;
 	return (i);

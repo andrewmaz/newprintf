@@ -47,6 +47,7 @@ typedef struct	s_key
   char			r;
   wchar_t		wr;
   wchar_t		*wres;
+  int			nb;
 
 }				t_key;
 
@@ -66,5 +67,8 @@ int			ft_print_dig(t_key *key);
 int ft_size(t_key *key, int p, int w);
 int ft_width(t_key *key, int p);
 int ft_precision(t_key *key);
+int ft_print_unic(t_key *key);
+int ft_print_uchar(t_key *key, unsigned int octet);
+void ft_putuchar(int nb, unsigned int octet);
 
 #endif

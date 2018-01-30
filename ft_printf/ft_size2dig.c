@@ -9,8 +9,9 @@ int ft_size(t_key *key, int p, int w)
 	size += key->flag->hash && ft_searcINline("oO", key->sym) ? 1 : 0;
 	size += key->flag->hash && ft_searcINline("xX", key->sym) ? 2 : 0;
 	size += key->sym == 'p' ? 2 : 0;
-	size += key->flag->space;
+	size += key->flag->space || (key->flag->plus && key->res[0] != '-');
 	size -= (key->res[0] == '0' && !key->precision);
+
 	return (size);
 
 }
@@ -19,12 +20,11 @@ int ft_width(t_key *key, int p)
 {
 	int w;
 
-	w = key->width - (p > 0 ? p : 0) - (key->res[0] == '0' && \
-		!key->precision ? 0 : key->lenr);
+	w = key->width - (p > 0 ? p : 0) - (key->res[0] == '0' && !key->precision ? 0 : key->lenr);
 	w -= key->flag->hash && ft_searcINline("oO", key->sym) ? 1 : 0;
 	w -= key->flag->hash && ft_searcINline("xX", key->sym) ? 2 : 0;
 	w -= key->sym == 'p' ? 2 : 0;
-	w -= key->flag->space;
+	w -= key->flag->space || (key->flag->plus && key->res[0] != '-');
 	return (w);
 }
 

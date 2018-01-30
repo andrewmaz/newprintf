@@ -11,19 +11,22 @@ int ft_print_char(t_key *key)
 	char *res;
 
 	w = key->width - 1;
-	size = w > 1 ? key->width : 1;
+	size = w > 0 ? key->width : 1;
 	res = ft_strnew(size);
 	if (key->flag->minus)
 	{
-		res[0] = key->r;
+		write(1, &key->r, 1);
 		res = ft_addchar(res, ' ', w);
+		write(1, res, size - 1);
+
 	}
 	else
 	{
 		res = key->flag->zero ? ft_addchar(res, '0', w) : ft_addchar(res, ' ', w);
 		res[size - 1] = key->r;
+		write(1, res, size);
 	}
-	write(1, res, size);
+	ft_strdel(&res);
 	return (size);
 }
 
@@ -34,7 +37,7 @@ int ft_print_str(t_key *key)
 	int p;
 	char *res;
 
-	p =  key->precision;
+	p = key->precision;
 	key->lenr = p < key->lenr && p >= 0 ? p : key->lenr;
 	w = key->width - key->lenr;
 	size = key->lenr + (w > 0 ? w : 0);
@@ -51,5 +54,6 @@ int ft_print_str(t_key *key)
 		res = key->res ? ft_strncat(res, key->res, key->lenr) : res;
 	}
 	write(1, res, size);
+	ft_strdel(&res);
 	return (size);
 }

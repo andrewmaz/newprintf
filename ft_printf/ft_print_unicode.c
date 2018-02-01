@@ -21,7 +21,7 @@ void ft_mod_u(t_key *key, wchar_t c)
 	ft_strdel(&tmp);
 }
 
-int ft_putustr(t_key *key)
+int ft_myputustr(t_key *key)
 {
 	int i;
 	int size;
@@ -32,9 +32,9 @@ int ft_putustr(t_key *key)
 	{
 		ft_mod_u(key, key->wres[i]);
 		if (key->precision > 0 && (size + key->nb) <= key->precision)
-			ft_putuchar(key->nb, key->wres[i]);
+			ft_putuchar(key->wres[i]);
 		else if (key->precision < 0)
-			ft_putuchar(key->nb, key->wres[i]);
+			ft_putuchar(key->wres[i]);
 		else
 			return (size);
 		i++;
@@ -63,27 +63,25 @@ int ft_print_ustr(t_key *key)
 {
 	int size;
 	int w;
-	int p;
 	char *res;
 
 	key->lenr = key->wres ? ft_ustrlen(key) : 0;
-	p = key->precision;
 	w = key->width - key->lenr;
 	size = key->lenr + (w > 0 ? w : 0);
 	res = ft_strnew(size);
 	if (key->flag->minus)
 	{
-		key->lenr = ft_putustr(key);
-		ft_addchar(res, ' ', w);
+		key->lenr = ft_myputustr(key);
+		ft_addchar(res, ' ', w, 0);
 		write(1, res, size - key->lenr);
 
 	}
 	else
 	{
-		res = key->flag->zero ? ft_addchar(res, '0', w) : \
-			ft_addchar(res, ' ', w);
+		res = key->flag->zero ? ft_addchar(res, '0', w, 0) : \
+			ft_addchar(res, ' ', w, 0);
 		write(1, res, size - key->lenr);
-		key->lenr = ft_putustr(key);
+		key->lenr = ft_myputustr(key);
 	}
 	ft_strdel(&res);
 	return (size);

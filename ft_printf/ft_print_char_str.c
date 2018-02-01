@@ -13,18 +13,22 @@ int ft_print_char(t_key *key)
 	w = key->width - 1;
 	size = w > 0 ? key->width : 1;
 	res = ft_strnew(size);
+	key->nwres = ft_myrealloc(key->nwres, size);
 	if (key->flag->minus)
 	{
-		write(1, &key->r, 1);
-		res = ft_addchar(res, ' ', w);
-		write(1, res, size - 1);
+		//write(1, &key->r, 1);
+		res[0] = key->r;
+		res = ft_addchar(res, ' ', w, 1);
+		key->nwres = ft_mystrncat(key->nwres, res, size);
+		//write(1, res, size - 1);
 
 	}
 	else
 	{
-		res = key->flag->zero ? ft_addchar(res, '0', w) : ft_addchar(res, ' ', w);
+		res = key->flag->zero ? ft_addchar(res, '0', w, 0) : ft_addchar(res, ' ', w, 0);
 		res[size - 1] = key->r;
-		write(1, res, size);
+		//write(1, res, size);
+		key->nwres = ft_mystrncat(key->nwres, res, size);
 	}
 	ft_strdel(&res);
 	return (size);
@@ -45,15 +49,17 @@ int ft_print_str(t_key *key)
 	if (key->flag->minus)
 	{
 		res = key->res ? ft_strncat(res, key->res, key->lenr) : res;
-		res = ft_addchar(res, ' ', w);
+		res = ft_addchar(res, ' ', w, 0);
 	}
 	else
 	{
-		res = key->flag->zero ? ft_addchar(res, '0', w) : \
-			ft_addchar(res, ' ', w);
+		res = key->flag->zero ? ft_addchar(res, '0', w, 0) : \
+			ft_addchar(res, ' ', w, 0);
 		res = key->res ? ft_strncat(res, key->res, key->lenr) : res;
 	}
-	write(1, res, size);
+	key->nwres = ft_myrealloc(key->nwres, size);
+	key->nwres = ft_mystrcat(key->nwres, res);
+	//write(1, res, size);
 	ft_strdel(&res);
 	return (size);
 }

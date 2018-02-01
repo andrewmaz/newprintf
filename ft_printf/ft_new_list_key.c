@@ -37,5 +37,6 @@ t_key	*ft_new_key(void)
 	key->lenr = 0;
 	key->res = NULL;
 	key->wres = NULL;
+	key->nwres = NULL;
 	return (key);
 }

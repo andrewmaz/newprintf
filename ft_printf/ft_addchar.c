@@ -2,15 +2,12 @@
 // Created by andrewmazz on 29.01.18.
 //
 
-char *ft_addchar(char *str, char c, int k)
+char *ft_addchar(char *str, char c, int k, int s)
 {
-	int i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	k = k + i;
-	while (i < k)
-		str[i++] = c;
+	while (str[s])
+		s++;
+	k = k + s;
+	while (s < k)
+		str[s++] = c;
 	return (str);
 }

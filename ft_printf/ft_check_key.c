@@ -6,17 +6,19 @@
 
 static int ft_check_flag(t_key *key, char c)
 {
-	if (c == '+')
+	int res;
+
+	if ((res = (c == '+')))
 		key->flag->plus = 1;
-	else if (c == '-')
+	else if ((res = (c == '-')))
 		key->flag->minus = 1;
-	else if (c == '#')
+	else if ((res = (c == '#')))
 		key->flag->hash = 1;
-	else if (c == '0')
+	else if ((res = (c == '0')))
 		key->flag->zero = 1;
-	else if (c == ' ')
+	else if ((res = (c == ' ')))
 		key->flag->space = 1;
-	return (1);
+	return (res);
 }
 
 static int		ft_check_modtype(t_key *key, const char *format)

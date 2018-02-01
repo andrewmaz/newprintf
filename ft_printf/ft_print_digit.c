@@ -32,11 +32,15 @@ static int ft_flg_min(t_key *key)
 	res[0] = key->flag->plus && key->res[0] != '-' ? '+' : res[0];
 	res[0] = key->flag->space ? ' ' : res[0];
 	res = key->flag->hash ? ft_hash(key, res) : res;
-	res = ft_addchar(res, '0', p);
+	res = ft_addchar(res, '0', p, 0);
 	if (!(key->res[0] == '0' && !key->precision))
 		res = ft_strcat(res, key->res + (res[0] == '-'));
-	res = ft_addchar(res, ' ', w);
-	write(1, res, size);
+	res = ft_addchar(res, ' ', w, 0);
+	//key->nwres = res;
+	key->nwres = ft_myrealloc(key->nwres, size);
+	key->nwres = ft_mystrcat(key->nwres, res);
+	//ft_putstr((char*)key->nwres);
+	//write(1, res, size);
 	ft_strdel(&res);
 	return (size);
 }
@@ -56,11 +60,13 @@ static int ft_flg_nmin_zero(t_key *key)
 	res[0] = key->flag->plus && key->res[0] != '-' ? '+' : res[0];
 	res[0] = key->flag->space ? ' ' : res[0];
 	res = key->flag->hash ? ft_hash(key, res) : res;
-	res = ft_addchar(res, '0', w);
-	res = ft_addchar(res, '0', p);
+	res = ft_addchar(res, '0', w, 0);
+	res = ft_addchar(res, '0', p, 0);
 	if (!(key->res[0] == '0' && !key->precision))
 		res = ft_strcat(res, key->res + (res[0] == '-'));
-	write(1, res, size);
+	//write(1, res, size);
+	key->nwres = ft_myrealloc(key->nwres, size);
+	key->nwres = ft_mystrcat(key->nwres, res);
 	ft_strdel(&res);
 	return (size);
 }
@@ -77,15 +83,18 @@ static int ft_flg_nmin_nzero(t_key *key)
 	size = ft_size(key, p, w);
 	res = ft_strnew(size);
 	res[0] = key->flag->space ? ' ' : res[0];
-	res = ft_addchar(res, ' ', w);
+	res = ft_addchar(res, ' ', w, 0);
 	w = w < 0 ? 0 : w;
 	res[w] = key->res[0] == '-' ? '-' : res[w];
 	res[w] = key->flag->plus && key->res[0] != '-' ? '+' : res[w];
 	res = key->flag->hash ? ft_hash(key, res) : res;
-	res = ft_addchar(res, '0', p);
+	res = ft_addchar(res, '0', p, 0);
 	if (!(key->res[0] == '0' && !key->precision))
 		res = ft_strcat(res, key->res + (key->res[0] == '-'));
-	write(1, res, size);
+	//write(1, res, size);
+	//key->nwres = res;
+	key->nwres = ft_myrealloc(key->nwres, size);
+	key->nwres = ft_mystrcat(key->nwres, res);
 	ft_strdel(&res);
 	return (size);
 }

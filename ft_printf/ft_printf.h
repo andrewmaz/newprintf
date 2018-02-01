@@ -47,6 +47,7 @@ typedef struct	s_key
   char			r;
   wchar_t		wr;
   wchar_t		*wres;
+  wchar_t		*nwres;
   int			nb;
 
 }				t_key;
@@ -62,13 +63,21 @@ void ft_process_args(t_key *key, va_list args);
 char	*ft_struper(char *str);
 int ft_print_char(t_key *key);
 int ft_print_str(t_key *key);
-char *ft_addchar(char *str, char c, int k);
+char *ft_addchar(char *str, char c, int k, int s);
 int			ft_print_dig(t_key *key);
 int ft_size(t_key *key, int p, int w);
 int ft_width(t_key *key, int p);
 int ft_precision(t_key *key);
 int ft_print_unic(t_key *key);
 int ft_print_uchar(t_key *key, unsigned int octet);
-void ft_putuchar(int nb, unsigned int octet);
+int ft_putuchar(unsigned int octet);
+wchar_t *ft_mystrcat(wchar_t *wtr, char *str);
+wchar_t *ft_myrealloc(wchar_t *wtr, size_t size);
+wchar_t *ft_wtrcat(wchar_t *wtr, wchar_t *wtr2);
+void ft_putustr(wchar_t *wstr);
+wchar_t *ft_wtrcpy(wchar_t *w1, wchar_t *w2);
+void ft_putnustr(wchar_t *wstr, int n);
+wchar_t *ft_mystrncat(wchar_t *wtr, char *str, int n);
+wchar_t *ft_wtrncat(wchar_t *wtr, wchar_t *wtr2, int n);
 
 #endif

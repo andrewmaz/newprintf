@@ -67,17 +67,27 @@ int ft_fourchar(unsigned int v, unsigned int mask3)
 	return (4);
 }
 
-void ft_putuchar(int nb, unsigned int octet)
+int ft_putuchar(unsigned int octet)
 {
-	unsigned int mask1;
-	unsigned int mask2;
-	unsigned int mask3;
+	unsigned int	mask1;
+	unsigned int	mask2;
+	unsigned int	mask3;
+	char 			*tmp;
+	size_t			k;
 
 	mask1 = 49280;
 	mask2 = 14712960;
 	mask3 = 4034953344;
-	nb == 1 ? ft_onechar(octet) : 0;
-	nb == 2 ? ft_twochar(octet, mask1) : 0;
-	nb == 3 ? ft_threechar(octet, mask2) : 0;
-	nb == 4 ? ft_fourchar(octet, mask3) : 0;
+	tmp = ft_size2a_base(octet, 2);
+	k = ft_strlen(tmp);
+	if (k <= 7)
+		ft_onechar(octet);
+	else if (k <= 11)
+		ft_twochar(octet, mask1);
+	else if (k <= 16)
+		ft_threechar(octet, mask2);
+	else
+		ft_fourchar(octet, mask3);
+	ft_strdel(&tmp);
+	return (k);
 }

@@ -30,12 +30,7 @@ static void	ft_mod_key(t_key *key)
 	key->lenr = key->res ? (int)ft_strlen(key->res) : 0;
 }
 
-static void ft_del_key(t_key *key)
-{
-	free(key->flag);
-	free(key->modtype);
-	free(key);
-}
+
 
 int ft_print_float(t_key *key)
 {
@@ -67,6 +62,5 @@ int ft_print_res(t_key *key, va_list args)
 		size = ft_print_float(key);
 	else
 		size = (ft_print_char(key));
-	ft_del_key(key);
 	return (size);
 }

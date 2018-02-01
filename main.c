@@ -11,13 +11,17 @@
 
 int main()
 {
-//	setlocale(LC_ALL, "");
+	setlocale(LC_ALL, "");
 	int a = 1;
 	int p = 0;
 	int fp = 0;
 
-	printf(" my ret %d\n", ft_printf("%.s", NULL));
-	printf("!my ret %d\n",    printf("%.s", NULL));
+	//wchar_t *res = (wchar_t*);
+
+
+	//ft_putustr(res);
+	printf(" my ret %d\n", ft_printf("12 %d %s %c qwr", 1234, "qwe", '\0'));
+	printf("!my ret %d\n",    printf("12 %d %s %c qwr", 1234, "qwe", '\0'));
 
 	//printf("asd\n");
 

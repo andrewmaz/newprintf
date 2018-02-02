@@ -1,10 +1,18 @@
-//
-// Created by andrewmazz on 29.01.18.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_digit.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/02 17:28:50 by amazurok          #+#    #+#             */
+/*   Updated: 2018/02/02 17:30:26 by amazurok         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char *ft_hash(t_key *key, char *res)
+static char		*ft_hash(t_key *key, char *res)
 {
 	if ((key->sym == 'o' || key->sym == 'O'))
 		return (ft_strcat(res, "0"));
@@ -14,15 +22,15 @@ static char *ft_hash(t_key *key, char *res)
 		return (ft_strcat(res, "0X"));
 	else if (key->sym == 'p')
 		return (ft_strcat(res, "0x"));
-	return res;
+	return (res);
 }
 
-static int ft_flg_min(t_key *key)
+static int		ft_flg_min(t_key *key)
 {
-	int size;
-	int w;
-	int p;
-	char *res;
+	int		size;
+	int		w;
+	int		p;
+	char	*res;
 
 	p = ft_precision(key);
 	w = ft_width(key, p);
@@ -36,21 +44,18 @@ static int ft_flg_min(t_key *key)
 	if (!(key->res[0] == '0' && !key->precision))
 		res = ft_strcat(res, key->res + (res[0] == '-'));
 	res = ft_addchar(res, ' ', w, 0);
-	//key->nwres = res;
 	key->nwres = ft_myrealloc(key->nwres, size);
 	key->nwres = ft_mystrcat(key->nwres, res);
-	//ft_putstr((char*)key->nwres);
-	//write(1, res, size);
 	ft_strdel(&res);
 	return (size);
 }
 
-static int ft_flg_nmin_zero(t_key *key)
+static int		ft_flg_nmin_zero(t_key *key)
 {
-	int size;
-	int w;
-	int p;
-	char *res;
+	int		size;
+	int		w;
+	int		p;
+	char	*res;
 
 	p = ft_precision(key);
 	w = ft_width(key, p);
@@ -64,19 +69,18 @@ static int ft_flg_nmin_zero(t_key *key)
 	res = ft_addchar(res, '0', p, 0);
 	if (!(key->res[0] == '0' && !key->precision))
 		res = ft_strcat(res, key->res + (res[0] == '-'));
-	//write(1, res, size);
 	key->nwres = ft_myrealloc(key->nwres, size);
 	key->nwres = ft_mystrcat(key->nwres, res);
 	ft_strdel(&res);
 	return (size);
 }
 
-static int ft_flg_nmin_nzero(t_key *key)
+static int		ft_flg_nmin_nzero(t_key *key)
 {
-	int size;
-	int w;
-	int p;
-	char *res;
+	int		size;
+	int		w;
+	int		p;
+	char	*res;
 
 	p = ft_precision(key);
 	w = ft_width(key, p);
@@ -91,15 +95,13 @@ static int ft_flg_nmin_nzero(t_key *key)
 	res = ft_addchar(res, '0', p, 0);
 	if (!(key->res[0] == '0' && !key->precision))
 		res = ft_strcat(res, key->res + (key->res[0] == '-'));
-	//write(1, res, size);
-	//key->nwres = res;
 	key->nwres = ft_myrealloc(key->nwres, size);
 	key->nwres = ft_mystrcat(key->nwres, res);
 	ft_strdel(&res);
 	return (size);
 }
 
-int			ft_print_dig(t_key *key)
+int				ft_print_dig(t_key *key)
 {
 	if (key->flag->minus)
 		return (ft_flg_min(key));

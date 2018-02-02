@@ -1,36 +1,39 @@
-//
-// Created by Andrii MAZUROK on 1/30/18.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_w_char.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/02 17:04:52 by amazurok          #+#    #+#             */
+/*   Updated: 2018/02/02 17:06:19 by amazurok         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_print_uchar(t_key *key, unsigned int octet)
+int		ft_print_uchar(t_key *key, unsigned int octet)
 {
-	int size;
-	int w;
-	char *res;
+	int		size;
+	int		w;
+	char	*res;
 
 	w = key->width - key->nb;
 	size = w > 0 ? key->width : key->nb;
 	res = ft_strnew(size);
+	key->nwres = ft_myrealloc(key->nwres, size);
 	if (key->flag->minus)
 	{
-		key->nwres = ft_myrealloc(key->nwres, size);
-		//ft_putuchar(octet);
-		key->nwres[0] = octet;
+		key->nwres[0] = octet ? octet : -1;
 		res = ft_addchar(res, ' ', w, 1);
 		key->nwres = ft_mystrcat(key->nwres, res);
-		//write(1, res, size - key->nb);
 	}
 	else
 	{
-		res = key->flag->zero ? ft_addchar(res, '0', w, 0) : ft_addchar(res, ' ', w, 0);
-		//write(1, res, size - key->nb);
-		//ft_putuchar(octet);
-		key->nwres = ft_myrealloc(key->nwres, size);
+		res = key->flag->zero ? ft_addchar(res, '0', w, 0) : \
+			ft_addchar(res, ' ', w, 0);
 		key->nwres = ft_mystrcat(key->nwres, res);
-		key->nwres[size - key->nb] = octet;
-
+		key->nwres[size - key->nb] = octet ? octet : -1;
 	}
 	ft_strdel(&res);
 	return (size);

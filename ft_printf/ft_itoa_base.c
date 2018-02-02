@@ -6,7 +6,7 @@
 /*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 12:21:44 by amazurok          #+#    #+#             */
-/*   Updated: 2018/01/23 12:28:15 by amazurok         ###   ########.fr       */
+/*   Updated: 2018/02/02 16:56:45 by amazurok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int		ft_intlen(size_t val, int base)
 	return (i);
 }
 
-char	*ft_size2a_base(size_t value, int base)
+char			*ft_size2a_base(size_t value, int base)
 {
 	size_t	uval;
 	int		tmp;
@@ -50,7 +50,7 @@ char	*ft_size2a_base(size_t value, int base)
 	return (res);
 }
 
-char	*ft_ssize2a_base(ssize_t value, int base)
+char			*ft_ssize2a_base(ssize_t value, int base)
 {
 	size_t	uval;
 	int		tmp;

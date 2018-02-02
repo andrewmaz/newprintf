@@ -1,10 +1,18 @@
-//
-// Created by andrewmazz on 28.01.18.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_check_key.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/02 16:59:48 by amazurok          #+#    #+#             */
+/*   Updated: 2018/02/02 17:04:30 by amazurok         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int ft_check_flag(t_key *key, char c)
+static int	ft_check_flag(t_key *key, char c)
 {
 	int res;
 
@@ -21,7 +29,7 @@ static int ft_check_flag(t_key *key, char c)
 	return (res);
 }
 
-static int		ft_check_modtype(t_key *key, const char *format)
+static int	ft_check_modtype(t_key *key, const char *format)
 {
 	int i;
 	int res;
@@ -48,7 +56,7 @@ static int		ft_check_modtype(t_key *key, const char *format)
 	return (res);
 }
 
-static int		ft_width_key(t_key *key, const char *format, va_list args)
+static int	ft_width_key(t_key *key, const char *format, va_list args)
 {
 	int i;
 
@@ -72,7 +80,7 @@ static int		ft_width_key(t_key *key, const char *format, va_list args)
 	return (i);
 }
 
-static int		ft_precision_key(t_key *key, const char *format, va_list args)
+static int	ft_precision_key(t_key *key, const char *format, va_list args)
 {
 	int i;
 
@@ -93,15 +101,13 @@ static int		ft_precision_key(t_key *key, const char *format, va_list args)
 	return (i);
 }
 
-
-
-int ft_check_key(t_key *key, const char *format, va_list args)
+int			ft_check_key(t_key *key, const char *format, va_list args)
 {
 	while (*format && !key->sym)
 	{
-		if(ft_searcINline("0+-# ", *format))
-			format += ft_check_flag(key, *format);
-		else if (ft_searcINline("hljz", *format))
+		if (ft_check_flag(key, *format))
+			format++;
+		else if (ft_check_modtype(key, format))
 			format += ft_check_modtype(key, format);
 		else if (*format == '.')
 			format += ft_precision_key(key, format, args);

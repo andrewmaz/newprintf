@@ -1,8 +1,16 @@
-//
-// Created by andrewmazz on 29.01.18.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_addchar.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amazurok <amazurok@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/31 14:54:41 by amazurok          #+#    #+#             */
+/*   Updated: 2018/02/02 16:55:50 by amazurok         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-char *ft_addchar(char *str, char c, int k, int s)
+char	*ft_addchar(char *str, char c, int k, int s)
 {
 	while (str[s])
 		s++;

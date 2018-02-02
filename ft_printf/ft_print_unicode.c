@@ -1,10 +1,18 @@
-//
-// Created by Andrii MAZUROK on 1/30/18.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_unicode.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/02 17:21:27 by amazurok          #+#    #+#             */
+/*   Updated: 2018/02/02 17:24:03 by amazurok         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void ft_mod_u(t_key *key, wchar_t c)
+void		ft_mod_u(t_key *key, wchar_t c)
 {
 	char *tmp;
 
@@ -21,7 +29,7 @@ void ft_mod_u(t_key *key, wchar_t c)
 	ft_strdel(&tmp);
 }
 
-int ft_myputustr(t_key *key)
+int			ft_myputustr(t_key *key, int s)
 {
 	int i;
 	int size;
@@ -32,25 +40,25 @@ int ft_myputustr(t_key *key)
 	{
 		ft_mod_u(key, key->wres[i]);
 		if (key->precision > 0 && (size + key->nb) <= key->precision)
-			ft_putuchar(key->wres[i]);
+			key->nwres[s++] = key->wres[i++];
 		else if (key->precision < 0)
-			ft_putuchar(key->wres[i]);
+			key->nwres[s++] = key->wres[i++];
 		else
-			return (size);
-		i++;
+			return (i);
 		size += key->nb;
 	}
-	return (size);
+	return (i);
 }
 
-size_t ft_ustrlen(t_key *key)
+size_t		ft_ustrlen(t_key *key)
 {
 	size_t i;
 	size_t size;
 
 	i = 0;
 	size = 0;
-	while (key->wres[i] && ((key->precision > 0 && (int)(size + key->nb) <= key->precision) || key->precision < 0))
+	while (key->wres[i] && ((key->precision > 0 && (int)(size + key->nb) <= \
+		key->precision) || key->precision < 0))
 	{
 		ft_mod_u(key, key->wres[i]);
 		size += key->nb;
@@ -59,35 +67,35 @@ size_t ft_ustrlen(t_key *key)
 	return (size);
 }
 
-int ft_print_ustr(t_key *key)
+int			ft_print_ustr(t_key *key)
 {
-	int size;
-	int w;
-	char *res;
+	int		size;
+	int		w;
+	char	*res;
 
 	key->lenr = key->wres ? ft_ustrlen(key) : 0;
 	w = key->width - key->lenr;
 	size = key->lenr + (w > 0 ? w : 0);
 	res = ft_strnew(size);
+	key->nwres = ft_myrealloc(key->nwres, size);
 	if (key->flag->minus)
 	{
-		key->lenr = ft_myputustr(key);
+		key->lenr = ft_myputustr(key, 0);
 		ft_addchar(res, ' ', w, 0);
-		write(1, res, size - key->lenr);
-
+		key->nwres = ft_mystrcat(key->nwres, res);
 	}
 	else
 	{
 		res = key->flag->zero ? ft_addchar(res, '0', w, 0) : \
 			ft_addchar(res, ' ', w, 0);
-		write(1, res, size - key->lenr);
-		key->lenr = ft_myputustr(key);
+		key->nwres = ft_mystrcat(key->nwres, res);
+		key->lenr = ft_myputustr(key, (w > 0 ? w : 0));
 	}
 	ft_strdel(&res);
 	return (size);
 }
 
-int ft_print_unic(t_key *key)
+int			ft_print_unic(t_key *key)
 {
 	unsigned int octet;
 
@@ -100,7 +108,7 @@ int ft_print_unic(t_key *key)
 	if (key->sym == 'S' || (key->sym == 's' && key->modtype->l))
 	{
 		if (!key->wres)
-			return ft_print_str(key);
+			return (ft_print_str(key));
 		return (ft_print_ustr(key));
 	}
 	return (0);

@@ -1,16 +1,24 @@
-//
-// Created by Andrii MAZUROK on 1/30/18.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putuchar.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/02 17:34:34 by amazurok          #+#    #+#             */
+/*   Updated: 2018/02/02 17:35:42 by amazurok         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_onechar(unsigned int v)
+int		ft_onechar(unsigned int v)
 {
 	write(1, &v, 1);
 	return (1);
 }
 
-int ft_twochar(unsigned int v, unsigned int mask1)
+int		ft_twochar(unsigned int v, unsigned int mask1)
 {
 	unsigned char octet;
 	unsigned char o2;
@@ -25,7 +33,7 @@ int ft_twochar(unsigned int v, unsigned int mask1)
 	return (2);
 }
 
-int ft_threechar(unsigned int v, unsigned int mask2)
+int		ft_threechar(unsigned int v, unsigned int mask2)
 {
 	unsigned char octet;
 	unsigned char o3;
@@ -44,7 +52,7 @@ int ft_threechar(unsigned int v, unsigned int mask2)
 	return (3);
 }
 
-int ft_fourchar(unsigned int v, unsigned int mask3)
+int		ft_fourchar(unsigned int v, unsigned int mask3)
 {
 	unsigned char octet;
 	unsigned char o4;
@@ -67,12 +75,12 @@ int ft_fourchar(unsigned int v, unsigned int mask3)
 	return (4);
 }
 
-int ft_putuchar(unsigned int octet)
+int		ft_putuchar(unsigned int octet)
 {
 	unsigned int	mask1;
 	unsigned int	mask2;
 	unsigned int	mask3;
-	char 			*tmp;
+	char			*tmp;
 	size_t			k;
 
 	mask1 = 49280;

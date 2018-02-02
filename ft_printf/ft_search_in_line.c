@@ -1,10 +1,18 @@
-//
-// Created by andrewmazz on 28.01.18.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_search_in_line.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/02 17:30:48 by amazurok          #+#    #+#             */
+/*   Updated: 2018/02/02 17:31:13 by amazurok         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_searcINline(char *line, char c)
+int		ft_srchinstr(char *line, char c)
 {
 	int i;
 

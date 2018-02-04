@@ -1,42 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_w_char.c                                  :+:      :+:    :+:   */
+/*   ft_print_float.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/02 17:04:52 by amazurok          #+#    #+#             */
-/*   Updated: 2018/02/02 17:06:19 by amazurok         ###   ########.fr       */
+/*   Created: 2018/02/04 19:34:34 by amazurok          #+#    #+#             */
+/*   Updated: 2018/02/04 19:35:48 by amazurok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_print_uchar(t_key *key, unsigned int octet)
+int			ft_print_float(t_key *key)
 {
-	int		size;
 	int		w;
 	char	*res;
-	int		nb;
+	int		size;
 
-	nb = ft_mod_u(octet);
-	w = key->width - nb;
-	size = w > 0 ? key->width : nb;
+	w = key->width - key->lenr;
+	size = key->lenr + (w > 0 ? w : 0);
 	res = ft_strnew(size);
-	key->nwres = ft_myrealloc(key->nwres, size);
 	if (key->flag->minus)
 	{
-		key->nwres[0] = octet ? octet : -1;
-		res = ft_addchar(res, ' ', w, 1);
-		key->nwres = ft_mystrcat(key->nwres, res);
+		res = ft_strcat(res, key->res);
+		res = ft_addchar(res, ' ', w, 0);
 	}
 	else
 	{
 		res = key->flag->zero ? ft_addchar(res, '0', w, 0) : \
 			ft_addchar(res, ' ', w, 0);
-		key->nwres = ft_mystrcat(key->nwres, res);
-		key->nwres[size - nb] = octet ? octet : -1;
+		res = ft_strcat(res, key->res);
 	}
+	key->nwres = ft_myrealloc(key->nwres, size);
+	key->nwres = ft_mystrcat(key->nwres, res);
 	ft_strdel(&res);
 	return (size);
 }

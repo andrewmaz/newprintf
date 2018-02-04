@@ -6,62 +6,70 @@
 /*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 17:21:27 by amazurok          #+#    #+#             */
-/*   Updated: 2018/02/02 17:24:03 by amazurok         ###   ########.fr       */
+/*   Updated: 2018/02/04 19:41:57 by amazurok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		ft_mod_u(t_key *key, wchar_t c)
+int			ft_mod_u(wchar_t c)
 {
-	char *tmp;
+	char	*tmp;
+	int		tm;
+	int		ret;
 
 	tmp = ft_size2a_base(c, 2);
-	key->lenr = ft_strlen(tmp);
-	if (key->lenr <= 7)
-		key->nb = 1;
-	else if (key->lenr <= 11)
-		key->nb = 2;
-	else if (key->lenr <= 16)
-		key->nb = 3;
+	tm = ft_strlen(tmp);
+	if (tm <= 7)
+		ret = 1;
+	else if (tm <= 11)
+		ret = 2;
+	else if (tm <= 16)
+		ret = 3;
 	else
-		key->nb = 4;
+		ret = 4;
 	ft_strdel(&tmp);
+	return (ret);
 }
 
 int			ft_myputustr(t_key *key, int s)
 {
 	int i;
 	int size;
+	int nb;
 
 	size = 0;
 	i = 0;
 	while (key->wres[i])
 	{
-		ft_mod_u(key, key->wres[i]);
-		if (key->precision > 0 && (size + key->nb) <= key->precision)
+		nb = ft_mod_u(key->wres[i]);
+		if (key->precision > 0 && (size + nb) <= key->precision)
 			key->nwres[s++] = key->wres[i++];
 		else if (key->precision < 0)
 			key->nwres[s++] = key->wres[i++];
 		else
 			return (i);
-		size += key->nb;
+		size += nb;
 	}
 	return (i);
 }
 
 size_t		ft_ustrlen(t_key *key)
 {
-	size_t i;
-	size_t size;
+	size_t	i;
+	size_t	size;
+	int		nb;
 
 	i = 0;
 	size = 0;
-	while (key->wres[i] && ((key->precision > 0 && (int)(size + key->nb) <= \
-		key->precision) || key->precision < 0))
+	while (key->wres[i])
 	{
-		ft_mod_u(key, key->wres[i]);
-		size += key->nb;
+		nb = ft_mod_u(key->wres[i]);
+		if ((key->precision >= 0 && ((int)(size + nb) <= key->precision)) || \
+			key->precision < 0)
+			size += nb;
+		else
+			break ;
 		i++;
 	}
 	return (size);
@@ -101,7 +109,6 @@ int			ft_print_unic(t_key *key)
 
 	if (key->sym == 'C' || (key->sym == 'c' && key->modtype->l))
 	{
-		ft_mod_u(key, key->wr);
 		octet = key->wr;
 		return (ft_print_uchar(key, octet));
 	}

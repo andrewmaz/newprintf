@@ -6,20 +6,11 @@
 /*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 17:31:30 by amazurok          #+#    #+#             */
-/*   Updated: 2018/02/02 17:33:04 by amazurok         ###   ########.fr       */
+/*   Updated: 2018/02/04 19:39:15 by amazurok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-void	ft_del_key(t_key *key)
-{
-	free(key->flag);
-	free(key->modtype);
-
-	free(key->nwres);
-	free(key);
-}
 
 static int	ft_skip_key(t_key *key, const char *format)
 {
@@ -63,16 +54,16 @@ int			ft_printf(const char *format, ...)
 {
 	int		size;
 	va_list	args;
-	t_key	*key;
 	wchar_t *wres;
-	int i;
+	char	*res;
+	t_key	*key;
+	int 	i;
 
-	va_start(args, format);
-	size = 0;
 	i = 0;
+	size = 0;
+	va_start(args, format);
 	wres = NULL;
 	while (*format)
-	{
 		if (*format == '%')
 		{
 			key = ft_new_key();
@@ -87,17 +78,15 @@ int			ft_printf(const char *format, ...)
 		else
 		{
 			wres = ft_myrealloc(wres, i + 1);
-			wres[i++] = *format;
+			wres[i++] = *format++;
 			size++;
-			format++;
 		}
-	}
 	if (MB_CUR_MAX <= 1)
 	{
-		char *sss = ft_strnew(size);
-		sss = ft_w2s(sss, wres);
-		write(1, sss, size);
-		ft_strdel(&sss);
+		res = ft_strnew(size);
+		res = ft_w2s(res, wres);
+		write(1, res, size);
+		ft_strdel(&res);
 	}
 	else
 		ft_putustr(wres);

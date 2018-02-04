@@ -35,12 +35,6 @@ static void	ft_mod_key(t_key *key)
 	key->lenr = key->res ? (int)ft_strlen(key->res) : 0;
 }
 
-int			ft_print_float(t_key *key)
-{
-	write(1, key->res, key->lenr);
-	return (key->lenr);
-}
-
 int			ft_print_res(t_key *key, va_list args)
 {
 	int size;

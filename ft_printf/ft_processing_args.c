@@ -6,7 +6,7 @@
 /*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 17:38:38 by amazurok          #+#    #+#             */
-/*   Updated: 2018/02/02 17:40:27 by amazurok         ###   ########.fr       */
+/*   Updated: 2018/02/04 19:41:12 by amazurok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,12 @@ void		ft_float2str(t_key *key, va_list args)
 	char		*bef_point;
 	long double	tmp;
 	int			i;
-	int k;
 
 	i = 1;
 	tmp = va_arg(args, double);
 	bef_point = ft_ssize2a_base((ssize_t)tmp, 10);
 	aft_point = ft_strdup(".");
-	if (tmp == -0.0)
-		k = 1;
-	tmp = tmp < 0? -tmp : tmp;
+	tmp = tmp < 0 ? -tmp : tmp;
 	tmp = tmp - (int)tmp;
 	if (key->precision == -1)
 		key->precision = 6;
@@ -78,7 +75,7 @@ void		ft_float2str(t_key *key, va_list args)
 	ft_strdel(&aft_point);
 }
 
-void		ft_process_args(t_key *key, va_list args)
+void		ft_process_dig(t_key *key, va_list args)
 {
 	if (key->sym == 'd' || key->sym == 'i' || key->sym == 'D')
 		ft_signed(key, args, 10);
@@ -90,6 +87,14 @@ void		ft_process_args(t_key *key, va_list args)
 		ft_unsigned(key, args, 16);
 	else if (key->sym == 'p')
 		key->res = ft_size2a_base((size_t)va_arg(args, void*), 16);
+	else if (key->sym == 'f' || key->sym == 'F')
+		ft_float2str(key, args);
+}
+
+void		ft_process_args(t_key *key, va_list args)
+{
+	if (ft_srchinstr("idDuUoOxXpfF", key->sym))
+		ft_process_dig(key, args);
 	else if (key->sym == 's')
 		if (key->modtype->l)
 			key->wres = va_arg(args, wchar_t*);
@@ -104,8 +109,6 @@ void		ft_process_args(t_key *key, va_list args)
 		key->wr = va_arg(args, wchar_t);
 	else if (key->sym == 'S')
 		key->wres = va_arg(args, wchar_t*);
-	else if (key->sym == 'f' || key->sym == 'F')
-		ft_float2str(key, args);
 	else
 		key->r = key->sym;
 }

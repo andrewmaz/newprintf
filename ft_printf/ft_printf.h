@@ -6,7 +6,7 @@
 /*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 17:24:19 by amazurok          #+#    #+#             */
-/*   Updated: 2018/02/02 17:28:16 by amazurok         ###   ########.fr       */
+/*   Updated: 2018/02/04 19:36:35 by amazurok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct	s_key
 	wchar_t		wr;
 	wchar_t		*wres;
 	wchar_t		*nwres;
-	int			nb;
 }				t_key;
 
 t_key			*ft_new_key(void);
@@ -83,10 +82,11 @@ wchar_t			*ft_myrealloc(wchar_t *wtr, size_t size);
 wchar_t			*ft_wtrcat(wchar_t *wtr, wchar_t *wtr2);
 void			ft_putustr(wchar_t *wstr);
 wchar_t			*ft_wtrcpy(wchar_t *w1, wchar_t *w2);
-void			ft_putnustr(wchar_t *wstr, int n);
 wchar_t			*ft_mystrncat(wchar_t *wtr, char *str, int n);
-wchar_t			*ft_wtrncat(wchar_t *wtr, wchar_t *wtr2, int n);
 void			ft_wstrdel(wchar_t **wstr);
-void			ft_mod_u(t_key *key, wchar_t c);
+int				ft_mod_u(wchar_t c);
+int				ft_print_float(t_key *key);
+wchar_t			*ft_wtrzero(wchar_t *w1, int n);
+void			ft_del_key(t_key *key);
 
 #endif

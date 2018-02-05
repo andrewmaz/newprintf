@@ -24,7 +24,7 @@ int		ft_print_char(t_key *key)
 	key->nwres = ft_myrealloc(key->nwres, size);
 	if (key->flag->minus)
 	{
-		res[0] = key->r ? key->r : 127;
+		res[0] = key->r ? key->r : -1;
 		res = ft_addchar(res, ' ', w, 1);
 		key->nwres = ft_mystrncat(key->nwres, res, size);
 	}
@@ -32,7 +32,7 @@ int		ft_print_char(t_key *key)
 	{
 		res = key->flag->zero ? ft_addchar(res, '0', w, 0) : \
 			ft_addchar(res, ' ', w, 0);
-		res[size - 1] = (key->r ? key->r : 127);
+		res[size - 1] = (key->r ? key->r : -1);
 		key->nwres = ft_mystrncat(key->nwres, res, size);
 	}
 	ft_strdel(&res);

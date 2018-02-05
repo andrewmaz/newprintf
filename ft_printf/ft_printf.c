@@ -91,10 +91,10 @@ int			ft_printf(const char *format, ...)
 	size = ft_whi(format, args, &wres, size);
 	if (MB_CUR_MAX <= 1)
 	{
-		size = wstrlen(wres);
+		//size = wstrlen(wres);
 		res = ft_strnew(size);
 		res = ft_w2s(res, wres);
-		write(1, res, size);
+		write(1, res, wstrlen(wres));
 		ft_strdel(&res);
 	}
 	else

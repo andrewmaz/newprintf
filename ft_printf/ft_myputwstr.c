@@ -19,7 +19,7 @@ void	ft_putustr(wchar_t *wstr)
 	i = 0;
 	while (wstr && wstr[i])
 	{
-		if (wstr[i] == '\1')
+		if (wstr[i] == 127)
 		{
 			write(1, "\0", 1);
 			i++;

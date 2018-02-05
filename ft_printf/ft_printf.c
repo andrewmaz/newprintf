@@ -50,6 +50,47 @@ int			wstrlen(wchar_t *wstr)
 	return (i);
 }
 
+wchar_t *ft_setcolor(const char **format, wchar_t *wres, const char *frm, t_res *tres)
+{
+	const char *tmp;
+	char *res;
+	wchar_t *qres;
+	int i;
+
+	i = 0;
+	tmp = frm;
+	res = ft_strnew(10);
+	tmp++;
+	while (*tmp != '}')
+		res[i++] = *tmp++;
+	tmp++;
+	if (!ft_strcmp(res, "red"))
+	{
+		tres->i += 5;
+		tres->col += 5;
+		qres = ft_myrealloc(wres, tres->i);
+		qres = ft_mystrcat(qres, "\033[31m");
+	}
+	else if (!ft_strcmp(res, "blue"))
+	{
+		tres->i += 5;
+		tres->col += 5;
+		qres = ft_myrealloc(wres, tres->i);
+		qres = ft_mystrcat(qres, "\033[34m");
+	}
+	else if (!ft_strcmp(res, "eoc"))
+	{
+		tres->i += 4;
+		tres->col += 4;
+		qres = ft_myrealloc(wres, tres->i);
+		qres = ft_mystrcat(qres, "\033[0m");
+	}
+	*format = tmp;
+	ft_strdel(&res);
+	return (qres);
+
+}
+
 wchar_t *ft_qwe(const char *format, va_list args, t_res *tres)
 {
 	t_key	*key;
@@ -68,6 +109,8 @@ wchar_t *ft_qwe(const char *format, va_list args, t_res *tres)
 			wres = ft_wtrcat(wres, key->nwres);
 			format += ft_skip_key(key, format);
 		}
+		else if (*format == '{')
+			wres = ft_setcolor(&format, wres, format, tres);
 		else
 		{
 			wres = ft_myrealloc(wres, tres->i + 1);
@@ -87,6 +130,7 @@ int			ft_printf(const char *format, ...)
 	tres = (t_res*)malloc(sizeof(t_res));
 	tres->i = 0;
 	tres->size = 0;
+	tres->col = 0;
 	va_start(args, format);
 	wres = ft_qwe(format, args, tres);
 	if (MB_CUR_MAX <= 1)

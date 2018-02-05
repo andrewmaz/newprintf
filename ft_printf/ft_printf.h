@@ -28,6 +28,7 @@ typedef struct	s_res
 {
   int			size;
   int			i;
+  int			col;
 }				t_res;
 
 typedef struct	s_modtype

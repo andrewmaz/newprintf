@@ -19,16 +19,14 @@ void	ft_putustr(wchar_t *wstr)
 	i = 0;
 	while (wstr && wstr[i])
 	{
-		if (MB_CUR_MAX <= 1)
+		if (wstr[i] == 127)
 		{
+			write(1, "\0", 1);
+			i++;
+		}
+		else if (wstr[i] < 128)
 			write(1, &wstr[i++], 1);
-		}
 		else
-		{
-			if (wstr[i] < 128)
-				write(1, &wstr[i++], 1);
-			else
-				ft_putuchar(wstr[i++]);
-		}
+			ft_putuchar(wstr[i++]);
 	}
 }

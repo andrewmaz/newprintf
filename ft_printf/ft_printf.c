@@ -54,15 +54,15 @@ int			ft_printf(const char *format, ...)
 {
 	int		size;
 	va_list	args;
-	//wchar_t *wres;
-	//char	*res;
+	wchar_t *wres;
+	char	*res;
 	t_key	*key;
-	//int 	i;
+	int 	i;
 
-	//i = 0;
+	i = 0;
 	size = 0;
 	va_start(args, format);
-	//wres = NULL;
+	wres = NULL;
 	while (*format)
 		if (*format == '%')
 		{
@@ -70,28 +70,27 @@ int			ft_printf(const char *format, ...)
 			if (!ft_check_key(key, ++format, args))
 				break ;
 			size += ft_print_res(key, args);
-			//i += wstrlen(key->nwres);
-			//wres = ft_myrealloc(wres, i);
-			//wres = ft_wtrcat(wres, key->nwres);
+			i += wstrlen(key->nwres);
+			wres = ft_myrealloc(wres, i);
+			wres = ft_wtrcat(wres, key->nwres);
 			format += ft_skip_key(key, format);
 		}
 		else
 		{
-			write(1, format++, 1);
-			//wres = ft_myrealloc(wres, i + 1);
-			//wres[i++] = *format++;
+			wres = ft_myrealloc(wres, i + 1);
+			wres[i++] = *format++;
 			size++;
 		}
-//	if (MB_CUR_MAX <= 1)
-//	{
-//		res = ft_strnew(size);
-//		res = ft_w2s(res, wres);
-//		write(1, res, size);
-//		ft_strdel(&res);
-//	}
-//	else
-//		ft_putustr(wres);
-//	ft_wstrdel(&wres);
+	if (MB_CUR_MAX <= 1)
+	{
+		res = ft_strnew(i);
+		res = ft_w2s(res, wres);
+		write(1, res, i);
+		ft_strdel(&res);
+	}
+	else
+		ft_putustr(wres);
+	ft_wstrdel(&wres);
 	va_end(args);
 	return (size);
 }

@@ -24,6 +24,12 @@ typedef long long int			t_lli;
 typedef unsigned long long int	t_ulli;
 typedef uintmax_t				t_uinmax;
 
+typedef struct	s_res
+{
+  int			size;
+  int			i;
+}				t_res;
+
 typedef struct	s_modtype
 {
 	int			h;

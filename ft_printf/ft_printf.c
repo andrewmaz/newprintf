@@ -12,6 +12,8 @@
 
 #include "ft_printf.h"
 
+#include "ft_printf.h"
+
 static int	ft_skip_key(t_key *key, const char *format)
 {
 	int i;
@@ -50,18 +52,12 @@ int			wstrlen(wchar_t *wstr)
 	return (i);
 }
 
-int			ft_printf(const char *format, ...)
+int			ft_whi(const char *format, va_list args, wchar_t **qres, int size)
 {
-	int		size;
-	va_list	args;
-	wchar_t *wres;
-	char	*res;
 	t_key	*key;
-	int 	i;
+	int		i;
+	wchar_t	*wres;
 
-	i = 0;
-	size = 0;
-	va_start(args, format);
 	wres = NULL;
 	while (*format)
 		if (*format == '%')
@@ -70,7 +66,7 @@ int			ft_printf(const char *format, ...)
 			if (!ft_check_key(key, ++format, args))
 				break ;
 			size += ft_print_res(key, args);
-			i += wstrlen(key->nwres);
+			i = !wres ? wstrlen(key->nwres) : i + wstrlen(key->nwres);
 			wres = ft_myrealloc(wres, i);
 			wres = ft_wtrcat(wres, key->nwres);
 			format += ft_skip_key(key, format);
@@ -81,6 +77,20 @@ int			ft_printf(const char *format, ...)
 			wres[i++] = *format++;
 			size++;
 		}
+	*qres = wres;
+	return (size);
+}
+
+int			ft_printf(const char *format, ...)
+{
+	int		size;
+	va_list	args;
+	wchar_t *wres;
+	char	*res;
+
+	va_start(args, format);
+	size = 0;
+	size = ft_whi(format, args, &wres, size);
 	if (MB_CUR_MAX <= 1)
 	{
 		res = ft_strnew(size);

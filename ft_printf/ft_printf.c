@@ -31,7 +31,7 @@ char		*ft_w2s(char *str, wchar_t *w)
 	i = 0;
 	while (w && w[i])
 	{
-		if (w[i] == -1)
+		if (w[i] == 127)
 			str[i] = 0;
 		else
 			str[i] = (char)w[i];

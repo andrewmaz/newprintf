@@ -26,7 +26,7 @@ int		ft_print_uchar(t_key *key, unsigned int octet)
 	key->nwres = ft_myrealloc(key->nwres, size);
 	if (key->flag->minus)
 	{
-		key->nwres[0] = octet ? octet : -1;
+		key->nwres[0] = octet ? octet : 127;
 		res = ft_addchar(res, ' ', w, 1);
 		key->nwres = ft_mystrcat(key->nwres, res);
 	}
@@ -35,7 +35,7 @@ int		ft_print_uchar(t_key *key, unsigned int octet)
 		res = key->flag->zero ? ft_addchar(res, '0', w, 0) : \
 			ft_addchar(res, ' ', w, 0);
 		key->nwres = ft_mystrcat(key->nwres, res);
-		key->nwres[size - nb] = octet ? octet : -1;
+		key->nwres[size - nb] = octet ? octet : 127;
 	}
 	ft_strdel(&res);
 	return (size);

@@ -99,6 +99,9 @@ int			ft_print_ustr(t_key *key)
 		key->nwres = ft_mystrcat(key->nwres, res);
 		key->lenr = ft_myputustr(key, (w > 0 ? w : 0));
 	}
+	//loc
+	ft_putustr(key->nwres);
+	ft_wstrdel(&key->nwres);
 	ft_strdel(&res);
 	return (size);
 }

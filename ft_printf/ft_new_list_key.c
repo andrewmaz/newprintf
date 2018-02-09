@@ -23,6 +23,8 @@ t_key	*ft_new_key(void)
 	key->flag->minus = 0;
 	key->flag->zero = 0;
 	key->flag->hash = 0;
+	key->flag->slash = 0;
+	key->flag->dpoint = 0;
 	key->width = 0;
 	key->precision = -1;
 	key->modtype = (t_modtype *)malloc(sizeof(t_modtype));

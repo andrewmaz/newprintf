@@ -26,6 +26,10 @@ static int	ft_check_flag(t_key *key, char c)
 		key->flag->zero = 1;
 	else if ((res = (c == ' ')))
 		key->flag->space = 1;
+	else if ((res = (c == '/')))
+		key->flag->slash = 1;
+	else if ((res = (c == ':')))
+		key->flag->dpoint = 1;
 	return (res);
 }
 

@@ -17,6 +17,7 @@
 # include <limits.h>
 # include <stdint.h>
 # include "../libft/libft.h"
+# include <time.h>
 
 typedef unsigned short int		t_usi;
 typedef unsigned long int		t_uli;
@@ -48,6 +49,8 @@ typedef struct	s_flag
 	int			minus;
 	int			plus;
 	int			space;
+  	int			slash;
+  	int			dpoint;
 }				t_flag;
 
 typedef struct	s_key
@@ -63,6 +66,7 @@ typedef struct	s_key
 	wchar_t		wr;
 	wchar_t		*wres;
 	wchar_t		*nwres;
+  	char 		date;
 }				t_key;
 
 t_key			*ft_new_key(void);
@@ -95,5 +99,6 @@ int				ft_mod_u(wchar_t c);
 int				ft_print_float(t_key *key);
 wchar_t			*ft_wtrzero(wchar_t *w1, int n);
 void			ft_del_key(t_key *key);
+int				ft_print_date(t_key *key);
 
 #endif

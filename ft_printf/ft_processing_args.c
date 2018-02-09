@@ -89,11 +89,13 @@ void		ft_process_dig(t_key *key, va_list args)
 		key->res = ft_size2a_base((size_t)va_arg(args, void*), 16);
 	else if (key->sym == 'f' || key->sym == 'F')
 		ft_float2str(key, args);
+	else if (key->sym == 'b')
+		ft_unsigned(key, args, 2);
 }
 
 void		ft_process_args(t_key *key, va_list args)
 {
-	if (ft_srchinstr("idDuUoOxXpfF", key->sym))
+	if (ft_srchinstr("idDuUoOxXpfFb", key->sym))
 		ft_process_dig(key, args);
 	else if (key->sym == 's')
 		if (key->modtype->l)

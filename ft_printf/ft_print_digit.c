@@ -22,6 +22,8 @@ static char		*ft_hash(t_key *key, char *res)
 		return (ft_strcat(res, "0X"));
 	else if (key->sym == 'p')
 		return (ft_strcat(res, "0x"));
+	else if (key->sym == 'b')
+		return (ft_strcat(res, "0b"));
 	return (res);
 }
 

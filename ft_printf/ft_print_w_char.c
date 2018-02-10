@@ -19,7 +19,7 @@ int		ft_print_uchar(t_key *key, unsigned int octet)
 	char	*res;
 	int		nb;
 
-	nb = ft_mod_u(octet);
+	nb = MB_CUR_MAX <= 1 ? 1 : ft_mod_u(octet);
 	w = key->width - nb;
 	size = w > 0 ? key->width : nb;
 	res = ft_strnew(size);
@@ -27,7 +27,7 @@ int		ft_print_uchar(t_key *key, unsigned int octet)
 	if (key->flag->minus)
 	{
 		key->nwres[0] = octet ? octet : 127;
-		res = ft_addchar(res, ' ', w, 1);
+		res = ft_addchar(res, ' ', w, 0);
 		key->nwres = ft_mystrcat(key->nwres, res);
 	}
 	else

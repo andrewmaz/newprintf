@@ -45,7 +45,7 @@ static void	ft_unsigned(t_key *key, va_list args, int base)
 	else if (key->modtype->hh)
 		key->res = ft_size2a_base((unsigned char)va_arg(args, int), base);
 	else
-		key->res = ft_size2a_base(va_arg(args, unsigned int), base);
+		key->res = ft_size2a_base((unsigned int)va_arg(args, int), base);
 }
 
 void		ft_float2str(t_key *key, va_list args)
@@ -93,7 +93,15 @@ void		ft_process_dig(t_key *key, va_list args)
 		ft_unsigned(key, args, 2);
 }
 
-void		ft_process_args(t_key *key, va_list args)
+void		ft_setn(int *p, t_res *tres)
+{
+	int *size;
+
+	size = p;
+	*size = tres->size;
+}
+
+void		ft_process_args(t_key *key, va_list args, t_res *tres)
 {
 	if (ft_srchinstr("idDuUoOxXpfFb", key->sym))
 		ft_process_dig(key, args);
@@ -111,6 +119,8 @@ void		ft_process_args(t_key *key, va_list args)
 		key->wr = va_arg(args, wchar_t);
 	else if (key->sym == 'S')
 		key->wres = va_arg(args, wchar_t*);
+	else if (key->sym == 'n')
+		ft_setn(va_arg(args, int*), tres);
 	else
 		key->r = key->sym;
 }

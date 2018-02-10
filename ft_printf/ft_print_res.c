@@ -35,13 +35,13 @@ static void	ft_mod_key(t_key *key)
 	key->lenr = key->res ? (int)ft_strlen(key->res) : 0;
 }
 
-int			ft_print_res(t_key *key, va_list args)
+int			ft_print_res(t_key *key, va_list args, t_res *tres)
 {
 	int size;
 
 	if (ft_srchinstr("UDO", key->sym))
 		key->modtype->l = 1;
-	ft_process_args(key, args);
+	ft_process_args(key, args, tres);
 	ft_mod_key(key);
 	if (ft_srchinstr("idDuUoOxXpb", key->sym))
 	{
@@ -60,6 +60,8 @@ int			ft_print_res(t_key *key, va_list args)
 	}
 	else if (key->sym == 'k')
 		size = ft_print_date(key);
+	else if (key->sym == 'n')
+		size = 0;
 	else
 		size = (ft_print_char(key));
 	return (size);

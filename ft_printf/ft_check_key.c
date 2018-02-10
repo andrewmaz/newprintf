@@ -57,6 +57,8 @@ static int	ft_check_modtype(t_key *key, const char *format)
 		key->modtype->j = 1;
 	else if ((res = (format[i] == 'z')))
 		key->modtype->z = 1;
+	else if ((res = (format[i] == 'L')))
+		key->modtype->L = 1;
 	return (res);
 }
 

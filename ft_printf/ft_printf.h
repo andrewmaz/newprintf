@@ -29,7 +29,6 @@ typedef struct	s_res
 {
   int			size;
   int			i;
-  int			col;
 }				t_res;
 
 typedef struct	s_modtype
@@ -40,6 +39,8 @@ typedef struct	s_modtype
 	int			ll;
 	int			j;
 	int			z;
+  	int			L;
+
 }				t_modtype;
 
 typedef struct	s_flag
@@ -72,11 +73,11 @@ typedef struct	s_key
 t_key			*ft_new_key(void);
 int				ft_srchinstr(char *line, char c);
 int				ft_check_key(t_key *key, const char *format, va_list args);
-int				ft_print_res(t_key *key, va_list args);
+int				ft_print_res(t_key *key, va_list args, t_res *tres);
 int				ft_printf(const char *format, ...);
 char			*ft_size2a_base(size_t value, int base);
 char			*ft_ssize2a_base(ssize_t value, int base);
-void			ft_process_args(t_key *key, va_list args);
+void			ft_process_args(t_key *key, va_list args, t_res *tres);
 char			*ft_struper(char *str);
 int				ft_print_char(t_key *key);
 int				ft_print_str(t_key *key);
@@ -100,5 +101,9 @@ int				ft_print_float(t_key *key);
 wchar_t			*ft_wtrzero(wchar_t *w1, int n);
 void			ft_del_key(t_key *key);
 int				ft_print_date(t_key *key);
+wchar_t			*ft_nonpercent(const char **format, wchar_t *wres, \
+					const char *frm, t_res *tres);
+int				ft_wstrlen(wchar_t *wstr);
+
 
 #endif

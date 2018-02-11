@@ -26,10 +26,8 @@ static int	ft_check_flag(t_key *key, char c)
 		key->flag->zero = 1;
 	else if ((res = (c == ' ')))
 		key->flag->space = 1;
-	else if ((res = (c == '/')))
-		key->flag->slash = 1;
-	else if ((res = (c == ':')))
-		key->flag->dpoint = 1;
+	else if ((res = (c == '\'')))
+		key->flag->sep = 1;
 	return (res);
 }
 
@@ -40,28 +38,59 @@ static int	ft_check_modtype(t_key *key, const char *format)
 
 	i = 0;
 	if ((res = (format[i] == 'h')))
-	{
 		if ((res += (format[i + 1] == 'h')) == 2)
 			key->modtype->hh = 1;
 		else
 			key->modtype->h = 1;
-	}
 	else if ((res = (format[i] == 'l')))
-	{
 		if ((res += (format[i + 1] == 'l')) == 2)
 			key->modtype->ll = 1;
 		else
 			key->modtype->l = 1;
-	}
 	else if ((res = (format[i] == 'j')))
 		key->modtype->j = 1;
 	else if ((res = (format[i] == 'z')))
 		key->modtype->z = 1;
 	else if ((res = (format[i] == 'L')))
 		key->modtype->L = 1;
+	else if ((res = (format[i] == 't')))
+		key->modtype->t = 1;
 	return (res);
 }
 
+int ft_check_date(t_key *key, const char *format)
+{
+	int i;
+	int res;
+
+	i = 0;
+	if ((res = (format[i] == 'Y')))
+		if ((res += (format[i + 1] == 'Y')) == 2)
+			key->date->YY = 1;
+		else
+			res = 0;
+	else if ((res = (format[i] == 'M')))
+		if ((res += (format[i + 1] == 'M')) == 2)
+			key->date->MM = 1;
+		else
+			res = 0;
+	else if ((res = (format[i] == 'D')))
+		if ((res += (format[i + 1] == 'D')) == 2)
+			key->date->DD = 1;
+		else
+			res = 0;
+	else if ((res = (format[i] == 'H')))
+		key->date->H = 1;
+	else if ((res = (format[i] == 'M')))
+		key->date->M = 1;
+	else if ((res = (format[i] == 'S')))
+		key->date->S = 1;
+	else if ((res = (format[i] == '/')))
+		key->date->slash = 1;
+	else if ((res = (format[i] == ':')))
+		key->date->dpoint = 1;
+	return (res);
+}
 static int	ft_width_key(t_key *key, const char *format, va_list args)
 {
 	int i;

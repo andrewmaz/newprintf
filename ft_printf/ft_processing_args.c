@@ -14,7 +14,9 @@
 
 static void	ft_signed(t_key *key, va_list args, int base)
 {
-	if (key->modtype->z)
+	if (key->modtype->t)
+		key->res = ft_ssize2a_base((ssize_t)va_arg(args, ssize_t), base);
+	else if (key->modtype->z)
 		key->res = ft_ssize2a_base((ssize_t)va_arg(args, ssize_t), base);
 	else if (key->modtype->j)
 		key->res = ft_ssize2a_base((intmax_t)va_arg(args, intmax_t), base);
@@ -32,7 +34,9 @@ static void	ft_signed(t_key *key, va_list args, int base)
 
 static void	ft_unsigned(t_key *key, va_list args, int base)
 {
-	if (key->modtype->z)
+	if (key->modtype->t)
+		key->res = ft_size2a_base((ptrdiff_t)va_arg(args, ptrdiff_t), base);
+	else if (key->modtype->z)
 		key->res = ft_size2a_base((size_t)va_arg(args, size_t), base);
 	else if (key->modtype->j)
 		key->res = ft_size2a_base((t_uinmax)va_arg(args, t_uinmax), base);

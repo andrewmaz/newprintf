@@ -18,6 +18,9 @@
 # include <stdint.h>
 # include "../libft/libft.h"
 # include <time.h>
+# include <locale.h>
+# include <stddef.h>
+
 
 typedef unsigned short int		t_usi;
 typedef unsigned long int		t_uli;
@@ -31,6 +34,19 @@ typedef struct	s_res
   int			i;
 }				t_res;
 
+typedef struct	s_date
+{
+  int			YY;
+  int			MM;
+  int			DD;
+  int			H;
+  int			M;
+  int			S;
+  int			slash;
+  int			dpoint;
+
+}				t_date;
+
 typedef struct	s_modtype
 {
 	int			h;
@@ -40,6 +56,7 @@ typedef struct	s_modtype
 	int			j;
 	int			z;
   	int			L;
+  	int			t;
 
 }				t_modtype;
 
@@ -50,8 +67,8 @@ typedef struct	s_flag
 	int			minus;
 	int			plus;
 	int			space;
-  	int			slash;
-  	int			dpoint;
+  	int			sep;
+
 }				t_flag;
 
 typedef struct	s_key
@@ -67,7 +84,7 @@ typedef struct	s_key
 	wchar_t		wr;
 	wchar_t		*wres;
 	wchar_t		*nwres;
-  	char 		date;
+  	t_date 		*date;
 }				t_key;
 
 t_key			*ft_new_key(void);
@@ -104,6 +121,6 @@ int				ft_print_date(t_key *key);
 wchar_t			*ft_nonpercent(const char **format, wchar_t *wres, \
 					const char *frm, t_res *tres);
 int				ft_wstrlen(wchar_t *wstr);
-
+void			ft_addsep(t_key *key);
 
 #endif

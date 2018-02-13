@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: amazurok <amazurok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 17:24:19 by amazurok          #+#    #+#             */
-/*   Updated: 2018/02/04 19:36:35 by amazurok         ###   ########.fr       */
+/*   Updated: 2018/02/13 18:20:11 by amazurok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <locale.h>
 # include <stddef.h>
 
-
 typedef unsigned short int		t_usi;
 typedef unsigned long int		t_uli;
 typedef long long int			t_lli;
@@ -30,21 +29,14 @@ typedef uintmax_t				t_uinmax;
 
 typedef struct	s_res
 {
-  int			size;
-  int			i;
+	int			size;
+	int			i;
 }				t_res;
 
 typedef struct	s_date
 {
-  int			YY;
-  int			MM;
-  int			DD;
-  int			H;
-  int			M;
-  int			S;
-  int			slash;
-  int			dpoint;
-
+	int			y;
+	int			t;
 }				t_date;
 
 typedef struct	s_modtype
@@ -55,9 +47,8 @@ typedef struct	s_modtype
 	int			ll;
 	int			j;
 	int			z;
-  	int			L;
-  	int			t;
-
+	int			lll;
+	int			t;
 }				t_modtype;
 
 typedef struct	s_flag
@@ -67,8 +58,7 @@ typedef struct	s_flag
 	int			minus;
 	int			plus;
 	int			space;
-  	int			sep;
-
+	int			sep;
 }				t_flag;
 
 typedef struct	s_key
@@ -84,7 +74,7 @@ typedef struct	s_key
 	wchar_t		wr;
 	wchar_t		*wres;
 	wchar_t		*nwres;
-  	t_date 		*date;
+	t_date		*date;
 }				t_key;
 
 t_key			*ft_new_key(void);
@@ -121,6 +111,7 @@ int				ft_print_date(t_key *key);
 wchar_t			*ft_nonpercent(const char **format, wchar_t *wres, \
 					const char *frm, t_res *tres);
 int				ft_wstrlen(wchar_t *wstr);
-void			ft_addsep(t_key *key);
-
+void			ft_addsep(char **str);
+void			ft_float2str(t_key *key, va_list args);
+void			ft_setn(int *p, t_res *tres);
 #endif

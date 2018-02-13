@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int			ft_mod_u(wchar_t c)
+int				ft_mod_u(wchar_t c)
 {
 	char	*tmp;
 	int		tm;
@@ -32,7 +32,7 @@ int			ft_mod_u(wchar_t c)
 	return (ret);
 }
 
-int			ft_myputustr(t_key *key, int s)
+static int		ft_myputustr(t_key *key, int s)
 {
 	int i;
 	int size;
@@ -54,7 +54,7 @@ int			ft_myputustr(t_key *key, int s)
 	return (i);
 }
 
-size_t		ft_ustrlen(t_key *key)
+static size_t	ft_ustrlen(t_key *key)
 {
 	size_t	i;
 	size_t	size;
@@ -75,7 +75,7 @@ size_t		ft_ustrlen(t_key *key)
 	return (size);
 }
 
-int			ft_print_ustr(t_key *key)
+static int		ft_print_ustr(t_key *key)
 {
 	int		size;
 	int		w;
@@ -103,7 +103,7 @@ int			ft_print_ustr(t_key *key)
 	return (size);
 }
 
-int			ft_print_unic(t_key *key)
+int				ft_print_unic(t_key *key)
 {
 	unsigned int octet;
 

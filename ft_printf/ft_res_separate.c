@@ -1,10 +1,18 @@
-//
-// Created by Andrii MAZUROK on 2/11/18.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_res_separate.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/13 17:25:55 by amazurok          #+#    #+#             */
+/*   Updated: 2018/02/13 17:27:39 by amazurok         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void ft_revers(char **nstr)
+static void	ft_revers(char **nstr)
 {
 	char	*res;
 	char	*str;
@@ -21,43 +29,40 @@ void ft_revers(char **nstr)
 	*nstr = res;
 }
 
-char *ft_rewritewisep(t_key *key, char sym)
+static char	*ft_rewritewisep(char *res, char sym)
 {
-	int i;
-	int k;
-	int s;
-	char *res;
+	int		i;
+	int		k;
+	int		s;
+	char	*nres;
 
-	res = NULL;
+	nres = NULL;
 	k = 0;
 	i = 0;
 	s = 0;
-	while (key->res[i])
+	while (res[i])
 	{
-		res = ft_realloc(res, k + 1);
-		if (!(s % 3) && s > 0 && sym)
+		nres = ft_realloc(nres, k + 1);
+		if (!(s % 3) && s > 0 && sym && res[i] != '-')
 		{
-			res[k++] = sym;
+			nres[k++] = sym;
 			s = 0;
 		}
 		else
 		{
-			res[k++] = key->res[i++];
+			nres[k++] = res[i++];
 			s++;
 		}
 	}
-	return (res);
+	return (nres);
 }
 
-void ft_addsep(t_key *key)
+void		ft_addsep(char **res)
 {
-	char *res;
 	struct lconv *lc;
 
 	lc = localeconv();
-	ft_revers(&key->res);
-	res = ft_rewritewisep(key, *lc->thousands_sep);
-	ft_revers(&res);
-	ft_strdel(&key->res);
-	key->res = res;
+	ft_revers(res);
+	*res = ft_rewritewisep(*res, *lc->thousands_sep);
+	ft_revers(res);
 }

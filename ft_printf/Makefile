@@ -12,23 +12,23 @@
 
 NAME =	printf.a
 
-#SRC = 	ft_printf.c ft_check_key.c ft_intputchar.c ft_itis.c ft_itoa_base.c \
-#		ft_new_list_key.c ft_print_digit.c ft_print_result.c \
-#		ft_processing_argument.c ft_strupper.c ft_print_char.c
+SRC = 	ft_addchar.c ft_check_key.c ft_del_key.c ft_itoa_base.c ft_myputwstr.c \
+		ft_n.c ft_new_list_key.c ft_nonoercent.c ft_print_char_str.c ft_print_date.c \
+		ft_print_digit.c ft_print_float.c ft_print_res.c ft_print_unicode.c \
+		ft_print_w_char.c ft_printf.c ft_processing_args.c ft_putuchar.c \
+		ft_res_separate.c ft_search_in_line.c ft_size2dig.c ft_strtounicat.c \
+		ft_strupper.c ft_wrealloc.c ft_wstrdel.c ft_wstrlen.c ft_wstrzero.c
 
-SRC = *.c
-OSRC = *.o
-#OSRC = $(patsubst %.c, %.o, $(SRC))
+OSRC = $(patsubst %.c, %.o, $(SRC))
 
 all: $(NAME)
 	
-$(NAME):
-	gcc -c -Wall -Wextra -Werror *.c
+$(NAME): $(OSRC)
 	ar cr $(NAME) $(OSRC)
 	ranlib $(NAME)
 
-#%.o : %.c
-#	gcc -c -Wall -Wextra -Werror $<
+%.o : %.c
+	gcc -c -Wall -Wextra -Werror $<
 
 clean:
 	rm -f $(OSRC)

@@ -12,36 +12,61 @@
 
 #include "ft_printf.h"
 
-t_key	*ft_new_key(void)
+static t_date		*ft_new_date(void)
+{
+	t_date *date;
+
+	date = (t_date *)malloc(sizeof(t_date));
+	date->t = 0;
+	date->y = 0;
+	return (date);
+}
+
+static t_modtype	*ft_newmodt(void)
+{
+	t_modtype *modtype;
+
+	modtype = (t_modtype *)malloc(sizeof(t_modtype));
+	modtype->h = 0;
+	modtype->hh = 0;
+	modtype->l = 0;
+	modtype->ll = 0;
+	modtype->j = 0;
+	modtype->z = 0;
+	modtype->lll = 0;
+	modtype->t = 0;
+	return (modtype);
+}
+
+static t_flag		*ft_new_flag(void)
+{
+	t_flag *flag;
+
+	flag = (t_flag *)malloc(sizeof(t_flag));
+	flag->space = 0;
+	flag->plus = 0;
+	flag->minus = 0;
+	flag->zero = 0;
+	flag->hash = 0;
+	flag->sep = 0;
+	return (flag);
+}
+
+t_key				*ft_new_key(void)
 {
 	t_key *key;
 
 	key = (t_key *)malloc(sizeof(t_key));
-	key->flag = (t_flag *)malloc(sizeof(t_flag));
-	key->flag->space = 0;
-	key->flag->plus = 0;
-	key->flag->minus = 0;
-	key->flag->zero = 0;
-	key->flag->hash = 0;
-	key->flag->slash = 0;
-	key->flag->dpoint = 0;
-	key->flag->sep = 0;
+	key->flag = ft_new_flag();
 	key->width = 0;
 	key->precision = -1;
-	key->modtype = (t_modtype *)malloc(sizeof(t_modtype));
-	key->modtype->h = 0;
-	key->modtype->hh = 0;
-	key->modtype->l = 0;
-	key->modtype->ll = 0;
-	key->modtype->j = 0;
-	key->modtype->z = 0;
-	key->modtype->L = 0;
-	key->modtype->t = 0;
+	key->modtype = ft_newmodt();
 	key->sym = 0;
 	key->r = 0;
 	key->lenr = 0;
 	key->res = NULL;
 	key->wres = NULL;
 	key->nwres = NULL;
+	key->date = ft_new_date();
 	return (key);
 }

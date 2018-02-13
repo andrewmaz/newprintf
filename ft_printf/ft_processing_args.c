@@ -6,7 +6,7 @@
 /*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 17:38:38 by amazurok          #+#    #+#             */
-/*   Updated: 2018/02/04 19:41:12 by amazurok         ###   ########.fr       */
+/*   Updated: 2018/02/13 17:32:05 by amazurok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,34 +52,7 @@ static void	ft_unsigned(t_key *key, va_list args, int base)
 		key->res = ft_size2a_base((unsigned int)va_arg(args, int), base);
 }
 
-void		ft_float2str(t_key *key, va_list args)
-{
-	char		*aft_point;
-	char		*bef_point;
-	long double	tmp;
-	int			i;
-
-	i = 1;
-	tmp = va_arg(args, double);
-	bef_point = ft_ssize2a_base((ssize_t)tmp, 10);
-	aft_point = ft_strdup(".");
-	tmp = tmp < 0 ? -tmp : tmp;
-	tmp = tmp - (int)tmp;
-	if (key->precision == -1)
-		key->precision = 6;
-	while (i < key->precision + 1)
-	{
-		tmp = tmp * 10;
-		aft_point = ft_realloc(aft_point, i + 1);
-		aft_point[i++] = (int)tmp + '0';
-		tmp = tmp - (int)tmp;
-	}
-	key->res = ft_strjoin(bef_point, aft_point);
-	ft_strdel(&bef_point);
-	ft_strdel(&aft_point);
-}
-
-void		ft_process_dig(t_key *key, va_list args)
+static void	ft_process_dig(t_key *key, va_list args)
 {
 	if (key->sym == 'd' || key->sym == 'i' || key->sym == 'D')
 		ft_signed(key, args, 10);
@@ -97,12 +70,33 @@ void		ft_process_dig(t_key *key, va_list args)
 		ft_unsigned(key, args, 2);
 }
 
-void		ft_setn(int *p, t_res *tres)
+static char	*ft_nonprint(char *str)
 {
-	int *size;
+	int		k;
+	char	*res;
+	char	*tmp;
 
-	size = p;
-	*size = tres->size;
+	k = 0;
+	res = NULL;
+	while (str && *str)
+	{
+		if (ft_isprint(*str))
+		{
+			res = ft_realloc(res, k + 1);
+			res[k++] = *str++;
+		}
+		else
+		{
+			tmp = ft_itoa(*str++);
+			k += ft_strlen(tmp) + 1;
+			res = ft_realloc(res, k);
+			res = ft_addchar(res, '\\', 1, 0);
+			res = ft_strcat(res, tmp);
+			ft_strdel(&tmp);
+		}
+	}
+	res = !str ? ft_strdup("\\0") : res;
+	return (res);
 }
 
 void		ft_process_args(t_key *key, va_list args, t_res *tres)
@@ -125,6 +119,8 @@ void		ft_process_args(t_key *key, va_list args, t_res *tres)
 		key->wres = va_arg(args, wchar_t*);
 	else if (key->sym == 'n')
 		ft_setn(va_arg(args, int*), tres);
+	else if (key->sym == 'r')
+		key->res = ft_nonprint(va_arg(args, char*));
 	else
 		key->r = key->sym;
 }

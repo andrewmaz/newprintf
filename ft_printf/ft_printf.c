@@ -6,13 +6,13 @@
 /*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 17:31:30 by amazurok          #+#    #+#             */
-/*   Updated: 2018/02/04 19:39:15 by amazurok         ###   ########.fr       */
+/*   Updated: 2018/02/13 17:19:36 by amazurok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_skip_key(t_key *key, const char *format)
+static int		ft_skip_key(t_key *key, const char *format)
 {
 	int i;
 
@@ -24,7 +24,7 @@ static int	ft_skip_key(t_key *key, const char *format)
 	return (i);
 }
 
-char		*ft_w2s(char *str, wchar_t *w)
+char			*ft_w2s(char *str, wchar_t *w)
 {
 	int i;
 
@@ -40,8 +40,7 @@ char		*ft_w2s(char *str, wchar_t *w)
 	return (str);
 }
 
-
-wchar_t *ft_qwe(const char *format, va_list args, t_res *tres)
+wchar_t			*ft_qwe(const char *format, va_list args, t_res *tres)
 {
 	t_key	*key;
 	wchar_t *wres;
@@ -64,7 +63,7 @@ wchar_t *ft_qwe(const char *format, va_list args, t_res *tres)
 	return (wres);
 }
 
-t_res *ft_new_tres()
+t_res			*ft_new_tres(void)
 {
 	t_res	*tres;
 
@@ -74,7 +73,7 @@ t_res *ft_new_tres()
 	return (tres);
 }
 
-int			ft_printf(const char *format, ...)
+int				ft_printf(const char *format, ...)
 {
 	va_list	args;
 	wchar_t *wres;

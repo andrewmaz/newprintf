@@ -1,10 +1,18 @@
-//
-// Created by Andrii MAZUROK on 2/10/18.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_nonoercent.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/13 16:54:47 by amazurok          #+#    #+#             */
+/*   Updated: 2018/02/13 18:00:05 by amazurok         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_color(wchar_t **wres, char *col, t_res *tres, wchar_t *color)
+static int	ft_color(wchar_t **wres, char *col, t_res *tres, wchar_t *color)
 {
 	if (!ft_strcmp(col, "black"))
 		color = ft_wtrcat(color, L"\033[30m");
@@ -32,10 +40,10 @@ int ft_color(wchar_t **wres, char *col, t_res *tres, wchar_t *color)
 	return (1);
 }
 
-int ft_setcolor(wchar_t **wres, char *col, t_res *tres)
+static int	ft_setcolor(wchar_t **wres, char *col, t_res *tres)
 {
-	wchar_t *color;
-	int ret;
+	wchar_t	*color;
+	int		ret;
 
 	color = NULL;
 	color = ft_myrealloc(color, 5);
@@ -44,11 +52,12 @@ int ft_setcolor(wchar_t **wres, char *col, t_res *tres)
 	return (ret);
 }
 
-wchar_t *ft_nonpercent(const char **format, wchar_t *wres, const char *frm, t_res *tres)
+wchar_t		*ft_nonpercent(const char **format, wchar_t *wres, \
+		const char *frm, t_res *tres)
 {
-	const char *tmp;
-	char *col;
-	int i;
+	const char	*tmp;
+	char		*col;
+	int			i;
 
 	tmp = *format;
 	i = 0;

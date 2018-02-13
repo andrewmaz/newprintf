@@ -16,6 +16,7 @@ void	ft_del_key(t_key *key)
 {
 	free(key->flag);
 	free(key->modtype);
-	free(key->nwres);
+	ft_wstrdel(&key->nwres);
+	free(key->date);
 	free(key);
 }

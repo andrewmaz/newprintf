@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/02 17:31:30 by amazurok          #+#    #+#             */
-/*   Updated: 2018/02/13 17:19:36 by amazurok         ###   ########.fr       */
+/*   Created: 2018/02/15 16:14:10 by amazurok          #+#    #+#             */
+/*   Updated: 2018/02/15 16:14:13 by amazurok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int		ft_skip_key(t_key *key, const char *format)
 	return (i);
 }
 
-char			*ft_w2s(char *str, wchar_t *w)
+static char		*ft_w2s(char *str, wchar_t *w)
 {
 	int i;
 
@@ -40,7 +40,21 @@ char			*ft_w2s(char *str, wchar_t *w)
 	return (str);
 }
 
-wchar_t			*ft_qwe(const char *format, va_list args, t_res *tres)
+static int		set_fd(const char *format, va_list args, t_res *tres)
+{
+	int fd;
+
+	if (ft_strnequ(format, "[fd]", 4))
+	{
+		fd = va_arg(args, int);
+		if (fd > 0)
+			tres->fd = fd;
+		return (1);
+	}
+	return (0);
+}
+
+static wchar_t	*ft_rd_form(const char *format, va_list args, t_res *tres)
 {
 	t_key	*key;
 	wchar_t *wres;
@@ -58,19 +72,11 @@ wchar_t			*ft_qwe(const char *format, va_list args, t_res *tres)
 			wres = ft_wtrcat(wres, key->nwres);
 			format += ft_skip_key(key, format);
 		}
+		else if (*format == '[' && set_fd(format, args, tres))
+			format += 4;
 		else
 			wres = ft_nonpercent(&format, wres, format, tres);
 	return (wres);
-}
-
-t_res			*ft_new_tres(void)
-{
-	t_res	*tres;
-
-	tres = (t_res *)malloc(sizeof(t_res));
-	tres->i = 0;
-	tres->size = 0;
-	return (tres);
 }
 
 int				ft_printf(const char *format, ...)
@@ -83,17 +89,17 @@ int				ft_printf(const char *format, ...)
 
 	tres = ft_new_tres();
 	va_start(args, format);
-	wres = ft_qwe(format, args, tres);
+	wres = ft_rd_form(format, args, tres);
 	va_end(args);
 	if (MB_CUR_MAX <= 1)
 	{
 		res = ft_strnew(tres->i);
 		res = ft_w2s(res, wres);
-		write(1, res, tres->i);
+		write(tres->fd, res, tres->i);
 		ft_strdel(&res);
 	}
 	else
-		ft_putustr(wres);
+		ft_putustr_fd(wres, tres->fd);
 	ft_wstrdel(&wres);
 	ret = tres->size;
 	free(tres);

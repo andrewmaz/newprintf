@@ -6,11 +6,22 @@
 /*   By: amazurok <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 12:22:06 by amazurok          #+#    #+#             */
-/*   Updated: 2018/01/23 12:22:08 by amazurok         ###   ########.fr       */
+/*   Updated: 2018/02/15 15:50:13 by amazurok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+t_res				*ft_new_tres(void)
+{
+	t_res	*tres;
+
+	tres = (t_res *)malloc(sizeof(t_res));
+	tres->i = 0;
+	tres->size = 0;
+	tres->fd = 1;
+	return (tres);
+}
 
 static t_date		*ft_new_date(void)
 {

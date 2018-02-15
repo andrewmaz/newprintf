@@ -12,13 +12,13 @@
 
 #include "ft_printf.h"
 
-static int	ft_onechar(unsigned int v)
+static int	ft_onechar(unsigned int v, int fd)
 {
-	write(1, &v, 1);
+	write(fd, &v, 1);
 	return (1);
 }
 
-static int	ft_twochar(unsigned int v, unsigned int mask1)
+static int	ft_twochar(unsigned int v, unsigned int mask1, int fd)
 {
 	unsigned char octet;
 	unsigned char o2;
@@ -27,13 +27,13 @@ static int	ft_twochar(unsigned int v, unsigned int mask1)
 	o1 = ((v >> 6) << 27) >> 27;
 	o2 = (v << 26) >> 26;
 	octet = (mask1 >> 8) | o1;
-	write(1, &octet, 1);
+	write(fd, &octet, 1);
 	octet = ((mask1 << 24) >> 24) | o2;
-	write(1, &octet, 1);
+	write(fd, &octet, 1);
 	return (2);
 }
 
-static int	ft_threechar(unsigned int v, unsigned int mask2)
+static int	ft_threechar(unsigned int v, unsigned int mask2, int fd)
 {
 	unsigned char octet;
 	unsigned char o3;
@@ -44,15 +44,15 @@ static int	ft_threechar(unsigned int v, unsigned int mask2)
 	o2 = ((v >> 6) << 26) >> 26;
 	o3 = (v << 26) >> 26;
 	octet = (mask2 >> 16) | o1;
-	write(1, &octet, 1);
+	write(fd, &octet, 1);
 	octet = ((mask2 << 16) >> 24) | o2;
-	write(1, &octet, 1);
+	write(fd, &octet, 1);
 	octet = ((mask2 << 24) >> 24) | o3;
-	write(1, &octet, 1);
+	write(fd, &octet, 1);
 	return (3);
 }
 
-static int	ft_fourchar(unsigned int v, unsigned int mask3)
+static int	ft_fourchar(unsigned int v, unsigned int mask3, int fd)
 {
 	unsigned char octet;
 	unsigned char o4;
@@ -65,17 +65,17 @@ static int	ft_fourchar(unsigned int v, unsigned int mask3)
 	o3 = ((v >> 6) << 26) >> 26;
 	o4 = (v << 26) >> 26;
 	octet = (mask3 >> 24) | o1;
-	write(1, &octet, 1);
+	write(fd, &octet, 1);
 	octet = ((mask3 << 8) >> 24) | o2;
-	write(1, &octet, 1);
+	write(fd, &octet, 1);
 	octet = ((mask3 << 16) >> 24) | o3;
-	write(1, &octet, 1);
+	write(fd, &octet, 1);
 	octet = ((mask3 << 24) >> 24) | o4;
-	write(1, &octet, 1);
+	write(fd, &octet, 1);
 	return (4);
 }
 
-int			ft_putuchar(unsigned int octet)
+int			ft_putuchar_fd(unsigned int octet, int fd)
 {
 	unsigned int	mask1;
 	unsigned int	mask2;
@@ -89,13 +89,13 @@ int			ft_putuchar(unsigned int octet)
 	tmp = ft_size2a_base(octet, 2);
 	k = ft_strlen(tmp);
 	if (k <= 7)
-		ft_onechar(octet);
+		ft_onechar(octet, fd);
 	else if (k <= 11)
-		ft_twochar(octet, mask1);
+		ft_twochar(octet, mask1, fd);
 	else if (k <= 16)
-		ft_threechar(octet, mask2);
+		ft_threechar(octet, mask2, fd);
 	else
-		ft_fourchar(octet, mask3);
+		ft_fourchar(octet, mask3, fd);
 	ft_strdel(&tmp);
 	return (k);
 }

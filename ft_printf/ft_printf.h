@@ -6,7 +6,7 @@
 /*   By: amazurok <amazurok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/02 17:24:19 by amazurok          #+#    #+#             */
-/*   Updated: 2018/02/13 18:20:11 by amazurok         ###   ########.fr       */
+/*   Updated: 2018/02/15 15:51:33 by amazurok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct	s_res
 {
 	int			size;
 	int			i;
+	int			fd;
 }				t_res;
 
 typedef struct	s_date
@@ -95,16 +96,16 @@ int				ft_width(t_key *key, int p);
 int				ft_precision(t_key *key);
 int				ft_print_unic(t_key *key);
 int				ft_print_uchar(t_key *key, unsigned int octet);
-int				ft_putuchar(unsigned int octet);
+int				ft_putuchar_fd(unsigned int octet, int fd);
 wchar_t			*ft_mystrcat(wchar_t *wtr, char *str);
 wchar_t			*ft_myrealloc(wchar_t *wtr, size_t size);
 wchar_t			*ft_wtrcat(wchar_t *wtr, wchar_t *wtr2);
-void			ft_putustr(wchar_t *wstr);
+void			ft_putustr_fd(wchar_t *wstr, int fd);
 wchar_t			*ft_wtrcpy(wchar_t *w1, wchar_t *w2);
 wchar_t			*ft_mystrncat(wchar_t *wtr, char *str, int n);
 void			ft_wstrdel(wchar_t **wstr);
 int				ft_mod_u(wchar_t c);
-int				ft_print_float(t_key *key);
+t_res			*ft_new_tres(void);
 wchar_t			*ft_wtrzero(wchar_t *w1, int n);
 void			ft_del_key(t_key *key);
 int				ft_print_date(t_key *key);
